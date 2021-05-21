@@ -19,18 +19,22 @@ module.exports = {
           let links = $(e).attr("href");
           console.log(links);
           let link = links.split("?")[0];
+          link = `${link}?1`;
           console.log("found", link);
 
           const oldvalue = await ScannedSites.find({
-            URL: `${link}?1`
+            URL: link
           });
           if (!oldvalue.length && link.length > 5) {
             ScannedSites.create([{
-              URL: `${link}?1`,
+              URL: link,
               Active: true,
             }]);
             console.log("saved", link);
             module.exports.scan(link);
+          } else if (oldvalue.length && !oldvalue[0].Active) {
+            oldvalue[0].Active = true;
+            oldvalue[0].save();
           } else {
             setTimeout(() => {
               module.exports.scan(link, tries);
@@ -40,7 +44,7 @@ module.exports = {
       })
       .catch(async function (e) {
         let link = url.split("?")[0];
-        console.log(`${link} is not active!`)
+        console.log(`${link}?1 is not active!`)
         const oldvalue = await ScannedSites.findOne({
           URL: `${link}?1`
         });

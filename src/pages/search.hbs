@@ -9227,21 +9227,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7 text-center mx-auto">
-            <h1 class="text-white pt-3 mt-n5">Detected {{TotalSites}} infected sites and {{ActiveSites}} of them are still active!</h1>
-            <p class="lead text-white mt-3">Check if your site is infected</p>
-            <form action="/search" method="get" data-dashlane-rid="4edd05cfeca7db45" data-form-type="search">
-              <div class="row text-center py-2 mt-3">
-                <div class="col-4 mx-auto">
-                  <div class="input-group mb-4">
-                    <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input class="form-control" name="url" placeholder="https://google.nl" type="text"
-                      data-dashlane-rid="4c41137f3a5da638" data-form-type="other">
-                  </div>
-                </div>
-
-              </div>
-
-            </form>
+            <h1 class="text-white pt-3 mt-n5">Found {{AmountFound}} results for: {{Query}}</h1>
           </div>
         </div>
       </div>
@@ -9279,7 +9265,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each Sites}}
+        {{#each FoundSites}}
         <tr>
           <td>
             <div class="d-flex px-2 py-1">
