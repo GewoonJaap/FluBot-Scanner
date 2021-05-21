@@ -3,6 +3,7 @@ let Schema = mongoose.Schema;
 
 let siteSchema = new Schema({
     URL: String,
+    FullLink: String,
     Active: Boolean,
 
 }, {

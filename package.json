@@ -16,8 +16,7 @@
     "handlebars": "^4.7.7",
     "lowdb": "^1.0.0",
     "mongoose": "^5.12.10",
-    "point-of-view": "^4.14.0",
-    "uuid": "^8.3.2"
+    "point-of-view": "^4.14.0"
   },
   "engines": {
     "node": "12.x"

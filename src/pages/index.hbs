@@ -9301,7 +9301,44 @@
     </div>
   </header>
 
-
+<section class="my-5 py-5">
+  <div class="container">
+  <div class="card">
+  <div class="table-responsive">
+    <table class="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">URL</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">First seen</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+          <th class="text-secondary opacity-7"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each Sites}}
+        <tr>
+          <td>
+            <div class="d-flex px-2 py-1">
+              <div>
+                <img src="/images/thief.png" class="avatar avatar-sm me-3">
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="text-xs font-weight-bold mb-0">{{URL}}</p>
+          </td>
+          <td class="align-middle text-center">
+            <span class="text-secondary text-xs font-weight-bold">{{createdAt}}</span>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+  </section>
 
 
 

@@ -6,9 +6,6 @@ module.exports = {
     const axios = require("axios");
     const cheerio = require("cheerio");
     const ScannedSites = require('./models/site');
-    const {
-      v4: uuidv4
-    } = require("uuid");
 
     axios
       .get(url, {
@@ -25,12 +22,12 @@ module.exports = {
           console.log("found", link);
 
           const oldvalue = await ScannedSites.find({
-            URL: link
+            URL: `${link}?1`
           });
           if (!oldvalue.length && link.length > 5) {
             ScannedSites.create([{
-              URL: link,
-              Active: true
+              URL: `${link}?1`,
+              Active: true,
             }]);
             console.log("saved", link);
             module.exports.scan(link);
@@ -45,7 +42,7 @@ module.exports = {
         let link = url.split("?")[0];
         console.log(`${link} is not active!`)
         const oldvalue = await ScannedSites.findOne({
-          URL: link
+          URL: `${link}?1`
         });
         if (!oldvalue) return;
         if (oldvalue.Active) {

@@ -46,11 +46,13 @@ fastify.get("/", async function(request, reply) {
   let params = { seo: seo };
   const amountScannedSites = await ScannedSites.countDocuments();
   const amountActiveSites = await ScannedSites.countDocuments({Active: true});
+  const sites = await ScannedSites.find({Active: true}).sort({createdAt: 'desc'}).limit(10).lean();
   // check and see if someone asked for a random color
     // we need to load our color data file, pick one at random, and add it to the params
     params = {
       TotalSites: amountScannedSites,
       ActiveSites: amountActiveSites,
+      Sites: sites,
       seo: seo
     };
   reply.view("/src/pages/index.hbs", params);
