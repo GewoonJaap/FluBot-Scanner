@@ -1,8 +1,12 @@
 const path = require("path");
-    const low = require("lowdb");
-    const FileSync = require("lowdb/adapters/FileSync");
-    const adapter = new FileSync("./data/sites.json");
-    const db = low(adapter);
+const mongoose = require("mongoose");
+const MongoClient = require("mongodb").MongoClient;
+require('dotenv').config()
+const ScannedSites = require('./models/site');
+const flubot = require('./flubotScanner.js');
+const flubotScanner = require("./flubotScanner.js");
+
+mongoose.connect(process.env.MONGODB);
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
@@ -26,6 +30,10 @@ fastify.register(require("point-of-view"), {
   }
 });
 
+initScan();
+setInterval(initScan, 1000 * 60 * 5);
+
+
 // load and parse SEO data
 const seo = require("./src/seo.json");
 if (seo.url === "glitch-default") {
@@ -33,27 +41,30 @@ if (seo.url === "glitch-default") {
 }
 
 // Our home page route, this pulls from src/pages/index.hbs
-fastify.get("/", function(request, reply) {
+fastify.get("/", async function(request, reply) {
   // params is an object we'll pass to our handlebars template
   let params = { seo: seo };
+  const amountScannedSites = await ScannedSites.countDocuments();
+  const amountActiveSites = await ScannedSites.countDocuments({Active: true});
   // check and see if someone asked for a random color
-  if (request.query.randomize) {
     // we need to load our color data file, pick one at random, and add it to the params
-    const colors = require("./src/colors.json");
-    const allColors = Object.keys(colors);
-    let currentColor = allColors[(allColors.length * Math.random()) << 0];
     params = {
-      color: colors[currentColor],
-      colorError: null,
+      TotalSites: amountScannedSites,
+      ActiveSites: amountActiveSites,
       seo: seo
     };
-  }
   reply.view("/src/pages/index.hbs", params);
 });
 
-fastify.get("/items", function(request, reply) { 
-  reply.send(db.get('url'))
+fastify.get("/items", async function(request, reply) { 
+  reply.send(await ScannedSites.find())
 });
+
+fastify.get("/search", async function(request, reply) {
+  if(!request.query || !request.query.url) return reply.redirect('/');
+  reply.send(request.query)
+});
+
 
 // A POST route to handle and react to form submissions 
 fastify.post("/", function(request, reply) {
@@ -62,7 +73,7 @@ fastify.post("/", function(request, reply) {
   let color = request.body.color;
   // if it's not empty, let's try to find the color
   if (color) {
-    const flubot = require('./flubotScanner.js');
+
     flubot.scan(color);
     // load our color data file
     const colors = require("./src/colors.json");
@@ -96,3 +107,10 @@ fastify.listen(process.env.PORT, function(err, address) {
   console.log(`Your app is listening on ${address}`);
   fastify.log.info(`server listening on ${address}`);
 });
+
+async function initScan(){
+  const allData = await ScannedSites.find();
+  allData.forEach(site => {
+    flubot.scan(site.URL);
+  });
+}

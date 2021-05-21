@@ -7,14 +7,16 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^0.22.0",
+    "dotenv": "^9.0.2",
     "fastify": "^3.15.1",
     "fastify-formbody": "^5.0.0",
     "fastify-static": "^4.0.0",
     "handlebars": "^4.7.7",
-    "point-of-view": "^4.14.0",
-    "cheerio": "^0.22.0",
-    "axios": "^0.21.1",
     "lowdb": "^1.0.0",
+    "mongoose": "^5.12.10",
+    "point-of-view": "^4.14.0",
     "uuid": "^8.3.2"
   },
   "engines": {
