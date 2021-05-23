@@ -4,7 +4,7 @@ require('dotenv').config()
 const ScannedSites = require('./models/site');
 const flubot = require('./src/js/util/flubotScanner');
 const utilFunctions = require('./src/js/util/utilFunctions');
-const handlebars= require('handlebars');
+const handlebars = require('handlebars');
 
 // ScannedSites.create([{
 //   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
@@ -52,11 +52,9 @@ fastify.get("/", async function (request, reply) {
   const amountActiveSites = await ScannedSites.countDocuments({
     Active: true
   });
-  const sites = await ScannedSites.find({
-    Active: true
-  }).sort({
+  const sites = await ScannedSites.find().sort({
     createdAt: 'desc'
-  }).limit(10).lean();
+  }).limit(20).lean();
 
   for (let i = 0; i < sites.length; i++) {
     sites[i].URL = flubot.generateUrlSuffix(sites[i].URL);
