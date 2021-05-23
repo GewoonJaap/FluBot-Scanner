@@ -43,7 +43,7 @@ fastify.register(require("point-of-view"), {
 });
 
 initScan();
-setInterval(initScan, 1000 * 60 * 5);
+setInterval(initScan, 1000 * 60 * 2);
 
 // Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", async function (request, reply) {
