@@ -6,10 +6,10 @@ const flubot = require('./src/js/util/flubotScanner');
 const utilFunctions = require('./src/js/util/utilFunctions');
 const handlebars= require('handlebars');
 
-ScannedSites.create([{
-  URL: 'https://tacticaltraumainternational.com/z2yym2.php',
-  Active: true,
-}]);
+// ScannedSites.create([{
+//   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
+//   Active: true,
+// }]);
 
 mongoose.connect(process.env.MONGODB);
 
