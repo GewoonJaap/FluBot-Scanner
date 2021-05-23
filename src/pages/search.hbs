@@ -6,7 +6,22 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-7 text-center mx-auto">
-            <h1 class="text-white pt-3 mt-n5">Found {{AmountFound}} results for: {{Query}}</h1>
+            <h1 class="text-white pt-3 mt-n5">Found {{AmountFound}} result(s) for:</h1>
+            <p class="lead text-white mt-3">{{Query}}</p>
+            <p class="lead text-white mt-3">Check if your site is infected</p>
+            <form action="/search" method="get" data-form-type="search">
+              <div class="row text-center py-2 mt-3">
+                <div class="col-4 mx-auto">
+                  <div class="input-group mb-4">
+                    <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+                    <input class="form-control" name="url" placeholder="https://google.nl" type="text"
+                      data-form-type="other">
+                  </div>
+                </div>
+
+              </div>
+
+            </form>
           </div>
         </div>
       </div>
@@ -55,7 +70,8 @@
                   </div>
                 </td>
                 <td class="align-middle text-center">
-                 <a class="text-secondary text-xs font-weight-bold" href="{{URL}}"> <span class="text-secondary text-xs font-weight-bold">{{URL}}</span></a>
+                  <a class="text-secondary text-xs font-weight-bold" href="{{URL}}"> <span
+                      class="text-secondary text-xs font-weight-bold">{{URL}}</span></a>
                 </td>
                 <td class="align-middle text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{createdAt}}</span>
