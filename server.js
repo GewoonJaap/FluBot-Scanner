@@ -45,9 +45,7 @@ fastify.register(require("point-of-view"), {
 initScan();
 setInterval(initScan, 1000 * 60 * 2);
 
-// Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", async function (request, reply) {
-  // params is an object we'll pass to our handlebars template
   const amountScannedSites = await ScannedSites.countDocuments();
   const amountActiveSites = await ScannedSites.countDocuments({
     Active: true
@@ -60,8 +58,6 @@ fastify.get("/", async function (request, reply) {
     sites[i].URL = flubot.generateUrlSuffix(sites[i].URL);
   }
 
-  // check and see if someone asked for a random color
-  // we need to load our color data file, pick one at random, and add it to the params
   params = {
     TotalSites: utilFunctions.numberWithCommas(amountScannedSites),
     ActiveSites: utilFunctions.numberWithCommas(amountActiveSites),
