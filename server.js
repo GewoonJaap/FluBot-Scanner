@@ -5,10 +5,10 @@ require('dotenv').config()
 const ScannedSites = require('./models/site');
 const flubot = require('./flubotScanner.js');
 
-ScannedSites.create([{
-  URL: 'https://tacticaltraumainternational.com/z2yym2.php',
-  Active: true,
-}]);
+// ScannedSites.create([{
+//   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
+//   Active: true,
+// }]);
 
 mongoose.connect(process.env.MONGODB);
 
