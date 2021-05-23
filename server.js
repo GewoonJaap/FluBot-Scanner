@@ -1,10 +1,10 @@
 const path = require("path");
 const mongoose = require("mongoose");
-const MongoClient = require("mongodb").MongoClient;
 require('dotenv').config()
 const ScannedSites = require('./models/site');
 const flubot = require('./src/js/util/flubotScanner');
 const utilFunctions = require('./src/js/util/utilFunctions');
+const handlebars= require('handlebars');
 
 ScannedSites.create([{
   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
@@ -31,7 +31,14 @@ fastify.register(require("fastify-formbody"));
 // point-of-view is a templating manager for fastify
 fastify.register(require("point-of-view"), {
   engine: {
-    handlebars: require("handlebars")
+    handlebars: handlebars,
+  },
+  options: {
+    partials: {
+      layout: 'src/pages/layouts/main.hbs',
+      navbar: 'src/pages/partials/navbar.hbs',
+      footer: 'src/pages/partials/footer.hbs',
+    }
   }
 });
 
