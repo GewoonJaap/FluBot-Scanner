@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const MongoClient = require("mongodb").MongoClient;
 require('dotenv').config()
 const ScannedSites = require('./models/site');
-const flubot = require('./flubotScanner.js');
+const flubot = require('./src/js/util/flubotScanner');
+const utilFunctions = require('./src/js/util/utilFunctions');
 
-// ScannedSites.create([{
-//   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
-//   Active: true,
-// }]);
+ScannedSites.create([{
+  URL: 'https://tacticaltraumainternational.com/z2yym2.php',
+  Active: true,
+}]);
 
 mongoose.connect(process.env.MONGODB);
 
@@ -57,8 +58,8 @@ fastify.get("/", async function (request, reply) {
   // check and see if someone asked for a random color
   // we need to load our color data file, pick one at random, and add it to the params
   params = {
-    TotalSites: amountScannedSites,
-    ActiveSites: amountActiveSites,
+    TotalSites: utilFunctions.numberWithCommas(amountScannedSites),
+    ActiveSites: utilFunctions.numberWithCommas(amountActiveSites),
     Sites: sites,
   };
   reply.view("/src/pages/index.hbs", params);
@@ -77,7 +78,7 @@ fastify.get("/search", async function (request, reply) {
   }).limit(10).lean();
   params = {
     FoundSites: foundSites,
-    AmountFound: foundSites.length,
+    AmountFound: utilFunctions.numberWithCommas(foundSites.length),
     Query: request.query.url
   }
   reply.view("/src/pages/search.hbs", params);

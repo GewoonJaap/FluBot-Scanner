@@ -1,7 +1,8 @@
 const Str = require('@supercharge/strings');
 const axios = require("axios");
 const cheerio = require("cheerio");
-const ScannedSites = require('./models/site');
+const ScannedSites = require('../../../models/site');
+const googleSafeWeb = require('./googleSafeWeb');
 
 module.exports = {
   scan: async function (url, tries = 0) {
@@ -45,6 +46,9 @@ module.exports = {
                 URL: link,
                 Active: true,
               }]);
+              
+              googleSafeWeb.reportToGoogle(link, response.data);
+
               module.exports.scan(link);
             } else if (oldvalue.length) {
               oldvalue[0].Active = true;
