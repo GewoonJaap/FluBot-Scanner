@@ -5,6 +5,7 @@ const ScannedSites = require('./models/site');
 const flubot = require('./src/js/util/flubotScanner');
 const utilFunctions = require('./src/js/util/utilFunctions');
 const handlebars = require('handlebars');
+const backup = require('./models/backup');
 
 // ScannedSites.create([{
 //   URL: 'https://tacticaltraumainternational.com/z2yym2.php',
@@ -41,9 +42,10 @@ fastify.register(require("point-of-view"), {
     }
   }
 });
-
+backupData();
 initScan();
 setInterval(initScan, 1000 * 60 * 2);
+setInterval(backupData, 1000 * 60 * 60 * 12);
 
 fastify.get("/", async function (request, reply) {
   const amountScannedSites = await ScannedSites.countDocuments();
@@ -98,6 +100,18 @@ fastify.listen(process.env.PORT, '0.0.0.0', function (err, address) {
   console.log(`Your app is listening on ${address}`);
   fastify.log.info(`server listening on ${address}`);
 });
+
+async function backupData() {
+  const allData = await ScannedSites.find({}, {
+    _id: 0,
+    createdAt: 0,
+    updatedAt: 0,
+    __v: 0
+  }).lean();
+  backup.create([{
+    data: allData,
+  }]);
+}
 
 async function initScan() {
   const allData = await ScannedSites.find();
