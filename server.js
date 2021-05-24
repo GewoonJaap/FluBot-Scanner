@@ -67,7 +67,10 @@ fastify.get("/", async function (request, reply) {
 });
 
 fastify.get("/items", async function (request, reply) {
-  reply.send(await ScannedSites.find())
+  reply.send(await ScannedSites.find({}, {
+    Active: 0,
+    __v: 0
+  }))
 });
 
 fastify.get("/search", async function (request, reply) {
