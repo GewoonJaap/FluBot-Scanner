@@ -16,7 +16,7 @@
     "fastify-static": "^4.0.0",
     "handlebars": "^4.7.7",
     "lowdb": "^1.0.0",
-    "mongoose": "^5.12.10",
+    "mongoose": "^5.13.15",
     "path": "^0.12.7",
     "point-of-view": "^4.14.0"
   },
